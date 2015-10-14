@@ -1,3 +1,9 @@
+/* 
+ * File:   linked_list.c
+ * Author: kanvikhanna
+ * Version 1.0
+ * Created on September 26, 2015, 9:40 AM
+ */
 #include <stdio.h> /* for printf support */
 #include <stdlib.h> /* for malloc support */
 #include "linked_list.h"

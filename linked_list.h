@@ -1,8 +1,11 @@
 /* 
  * File:   linked_list.h
  * Author: kanvikhanna
- *
+ * Version 1.0
  * Created on September 26, 2015, 9:41 AM
+ * 
+ * Implements a basic linked-list and provides standard operations such as
+ * adding, removing a node.
  */
 
 #ifndef LINKED_LIST_H
