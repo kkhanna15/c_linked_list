@@ -173,3 +173,54 @@ node* _search(int data)
     
     return temp;
 }
+
+/*
+ * remove head
+ */
+int remove_head()
+{
+    int data;
+    if(head == NULL)
+    {
+        printf("The linked list is empty.");
+        data = 0;
+    }
+    else if(head->next == NULL)
+    {
+        data = head->data;
+        free(head);
+    }
+    else
+    {
+        node* temp;
+        temp = head;
+        head = temp->next;
+        head->prev = NULL;
+        data = temp->data;
+        free(temp);
+    }
+    return data;
+}
+
+/*
+ * remove tail
+ */
+int remove_tail()
+{
+    int data;
+    if(head == NULL)
+    {
+        printf("The linked list is empty.");
+        data = 0;
+    }
+    else
+    {
+        node* temp;
+        temp = tail;
+        tail = temp->prev;
+        tail->next = NULL;
+        data = temp->data;
+        free(temp);
+    }
+    return data;
+}

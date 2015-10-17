@@ -50,7 +50,21 @@ int search(int data);
 
 int add_node_after(int after, int data);
 
+/**
+ * The remove_head function is used to remove the head node of the linked list
+ * and assign the next node as the head. It returns the data as output, if the
+ *  head was removed and 0, otherwise.
+ */
 
+int remove_head();
+
+/**
+ * The remove_tail function is used to remove the head node of the linked list
+ * and assign the previous node as the tail. It returns the data as output, if 
+ * the tail was removed and 0, otherwise.
+ */
+
+int remove_tail();
 
 #endif	/* LINKED_LIST_H */
 

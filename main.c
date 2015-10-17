@@ -63,6 +63,16 @@ int main(void) {
     else
         printf("failure\n");
     
+    int rh = remove_head();
+    if(rh)
+        printf("The head was removed. The value is %d\n",rh);
+    
+    int rt = remove_tail();
+    if(rt)
+        printf("The tail was removed. The value is %d\n",rt);
+    
+    traverse();
+    
 
     return (EXIT_SUCCESS);
 }
