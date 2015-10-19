@@ -16,7 +16,7 @@ typedef struct _node
 {
     struct _node* prev;
     struct _node* next;
-    int data;
+    void* data;
 } node;
 
 /*
@@ -24,13 +24,14 @@ typedef struct _node
  */
 static node* head = NULL;
 static node* tail = NULL;
-
-static node* _search(int data);
+static display_node_fptr_type display_node_fptr;
+static compare_node_fptr_type compare_node_fptr;
+static node* _search(void* data);
 
 /*
  * add_node
  */
-int add_node(int data)
+int add_node(void* data)
 {
     node* new_node = malloc(sizeof(node));
     
@@ -71,12 +72,13 @@ int add_node(int data)
 /*
  * remove_node
  */
-int remove_node(int data)
+void* remove_node(void* p_data)
 {
     // Removing a node from the linked list
-    
+        
         node* temp;
-        temp = _search(data);
+        void* temp_data = NULL;
+        temp = _search(p_data);
         
         if(temp)
         {
@@ -97,11 +99,12 @@ int remove_node(int data)
                 (temp->prev)->next = temp->next;
                 (temp->next)->prev = temp->prev;
             }
+            temp_data = temp->data;
             free(temp);
-            return 1;
+            
         }
 
-    return 0;  
+    return temp_data;  
 }
 
 
@@ -120,26 +123,41 @@ void traverse(void)
         node* temp = head;
         while(temp != NULL)
         {
-            printf("%d\n",temp->data);
+            display_node_fptr(temp->data);
             temp = temp->next;
         }
     }
 }
 
 /*
+ * initialize display function pointer
+ */
+
+int init_link_list( display_node_fptr_type _display_node_fptr,
+        compare_node_fptr_type _compare_node_fptr)
+{
+    if(!_display_node_fptr || !_compare_node_fptr)
+        return 0;
+    
+    display_node_fptr = _display_node_fptr;
+    compare_node_fptr = _compare_node_fptr;
+    return 1;
+}
+
+/*
  * search
  */
-int search(int data)
+int search(void* p_data)
 {
-    return ( _search(data) && 1 );
+    return ( _search(p_data) && 1 );
 }
 
 /*
  * add_node_after
  */
-int add_node_after(int after, int data)
+int add_node_after(void* after, void* data)
 {
-    node* temp = _search(data);
+    node* temp = _search(after);
     if(temp)
     {
         node* new_node = malloc(sizeof(node));
@@ -158,14 +176,15 @@ int add_node_after(int after, int data)
 /*
  * _search
  */
-node* _search(int data)
+node* _search(void* p_data)
 {
     node* temp;
     temp = head;
+    
     while(temp)
     {
-        if(temp->data == data)
-        {
+        if(!compare_node_fptr(p_data,temp->data))
+        { 
             break;
         }
         temp = temp->next;
@@ -177,13 +196,13 @@ node* _search(int data)
 /*
  * remove head
  */
-int remove_head()
+void* remove_head()
 {
-    int data;
+    void* data ;
     if(head == NULL)
     {
         printf("The linked list is empty.");
-        data = 0;
+        data = NULL;
     }
     else if(head->next == NULL)
     {
@@ -205,13 +224,13 @@ int remove_head()
 /*
  * remove tail
  */
-int remove_tail()
+void* remove_tail()
 {
-    int data;
+    void* data;
     if(head == NULL)
     {
         printf("The linked list is empty.");
-        data = 0;
+        data = NULL;
     }
     else
     {

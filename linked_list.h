@@ -12,12 +12,38 @@
 #define	LINKED_LIST_H
 
 /*
+ * Since our link-list does not know what type of data is stored in nodes, 
+ * link-list users must provide a function that we can use to display their
+ * node.
+ * Pointer to that function should be passed during initialization of link_list.
+ */
+typedef void (*display_node_fptr_type)(void*);
+
+
+/*
+ * Since our link-list does not know what type of data is stored in nodes, 
+ * link-list users must provide a function that we can use to display their
+ * node.
+ * Pointer to that function should be passed during initialization of link_list.
+ */
+typedef int (*compare_node_fptr_type)(void*, void*);
+
+/*
+ * Must initialize the link_list before performing any operations on it.
+ * input: pointer to a function that can display a node's data and
+ * pointer to a function that can compare a node's data
+ * return: 0 if fail, 1 if pass.
+ */
+int init_link_list( display_node_fptr_type display_node_fptr, 
+        compare_node_fptr_type compare_node_fptr);
+
+/*
  * The add_node function is used to add a new node to the end of the 
  * linked list. It takes the data as input and provides the status as output.
  * The status is 1, if the node was added successfully and 0, otherwise.
  */
 
-int add_node(int data);
+int add_node(void* data);
 
 /*
  * The remove_node function is used to remove a node to the linked list.
@@ -25,7 +51,7 @@ int add_node(int data);
  * status is 1, if the node was removed successfully and 0, otherwise.
  */
 
-int remove_node(int data);
+void* remove_node(void* data);
 
 /*
  * The traverse function is used to traverse the linked list and print it.
@@ -34,12 +60,12 @@ int remove_node(int data);
 void traverse(void);
 
 /*
- * The search function is used to search a node in the linked list.
+ * The search function is used to search if a exists node in the linked list.
  * It take the data as input and provides the status as output. The 
  * status is 1, if the node was found and 0, otherwise.
  */
 
-int search(int data);
+int search(void* data);
 
 /*
  * The add_node_after function is used to add a node to the linked list 
@@ -48,15 +74,15 @@ int search(int data);
  * and 0, otherwise.
  */
 
-int add_node_after(int after, int data);
+int add_node_after(void* after, void* data);
 
 /**
  * The remove_head function is used to remove the head node of the linked list
  * and assign the next node as the head. It returns the data as output, if the
- *  head was removed and 0, otherwise.
+ * head was removed and 0, otherwise.
  */
 
-int remove_head();
+void* remove_head();
 
 /**
  * The remove_tail function is used to remove the head node of the linked list
@@ -64,7 +90,9 @@ int remove_head();
  * the tail was removed and 0, otherwise.
  */
 
-int remove_tail();
+void* remove_tail();
+
+
 
 #endif	/* LINKED_LIST_H */
 
